@@ -15,6 +15,7 @@
 		3D4624C32BC0BA970047F0F4 /* Buddy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4624C22BC0BA970047F0F4 /* Buddy.swift */; };
 		3D624F872BC68E8B003628D0 /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D624F862BC68E8B003628D0 /* MacControlCenterUI */; };
 		3D624F8A2BC69115003628D0 /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 3D624F892BC69115003628D0 /* SettingsAccess */; };
+		A10000000000000000000001 /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000003 /* MenuBarExtraAccess */; };
 		3DAC90202BC00B4A0078AD69 /* WiredBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC901F2BC00B4A0078AD69 /* WiredBuddyApp.swift */; };
 		3DAC90222BC00B4A0078AD69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC90212BC00B4A0078AD69 /* ContentView.swift */; };
 		3DAC90242BC00B4A0078AD69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DAC90232BC00B4A0078AD69 /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 			files = (
 				3D32597C2C330CE1005173A3 /* LaunchAtLogin in Frameworks */,
 				3D624F872BC68E8B003628D0 /* MacControlCenterUI in Frameworks */,
+				A10000000000000000000001 /* MenuBarExtraAccess in Frameworks */,
 				3D624F8A2BC69115003628D0 /* SettingsAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,6 +157,7 @@
 			name = "Wired Buddy";
 			packageProductDependencies = (
 				3D624F862BC68E8B003628D0 /* MacControlCenterUI */,
+				A10000000000000000000003 /* MenuBarExtraAccess */,
 				3D624F892BC69115003628D0 /* SettingsAccess */,
 				3D32597B2C330CE1005173A3 /* LaunchAtLogin */,
 			);
@@ -189,6 +192,7 @@
 			mainGroup = 3DAC90132BC00B4A0078AD69;
 			packageReferences = (
 				3D624F852BC68E8B003628D0 /* XCRemoteSwiftPackageReference "MacControlCenterUI" */,
+				A10000000000000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
 				3D624F882BC69115003628D0 /* XCRemoteSwiftPackageReference "SettingsAccess" */,
 				3D32597A2C330CE1005173A3 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 			);
@@ -477,6 +481,14 @@
 				version = 1.4.0;
 			};
 		};
+		A10000000000000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/MenuBarExtraAccess";
+			requirement = {
+				kind = exactVersion;
+				version = 1.2.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -494,6 +506,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D624F882BC69115003628D0 /* XCRemoteSwiftPackageReference "SettingsAccess" */;
 			productName = SettingsAccess;
+		};
+		A10000000000000000000003 /* MenuBarExtraAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
+			productName = MenuBarExtraAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
