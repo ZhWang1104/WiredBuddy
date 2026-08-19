@@ -3,7 +3,9 @@
 import SwiftUI
 
 struct AboutView: View {
-    let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+    private let version = Bundle.main.object(
+        forInfoDictionaryKey: "CFBundleShortVersionString"
+    ) as? String ?? "—"
 
     var body: some View {
         VStack(alignment: .center) {

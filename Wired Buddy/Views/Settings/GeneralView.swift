@@ -4,13 +4,13 @@ import SwiftUI
 import LaunchAtLogin
 
 struct GeneralView: View {
-    @Binding public var isConnectionActive: Bool
-    @Binding public var wiredBuddyImage: Int
+    let isConnectionActive: Bool
+    @Binding var wiredBuddyImage: Int
 
-    @Binding public var hideDockIcon: Bool
-    @Binding public var onlyShowIcon: Bool
-    @Binding public var hideIPinMenu: Bool
-    @Binding public var colorStatus: Bool
+    @Binding var hideDockIcon: Bool
+    @Binding var onlyShowIcon: Bool
+    @Binding var hideIPinMenu: Bool
+    @Binding var colorStatus: Bool
 
     var body: some View {
         Form {
@@ -30,14 +30,13 @@ struct GeneralView: View {
             Text(LocalizedStringKey("descr_hide_dock_icon")).font(.footnote).foregroundColor(.secondary).lineLimit(nil).fixedSize(horizontal: false, vertical: true)
             Toggle(LocalizedStringKey("hide_ip"), isOn: $hideIPinMenu)
                 .toggleStyle(.checkbox)
-                .disabled(onlyShowIcon ? true : false)
             Divider()
             Picker(LocalizedStringKey("menu_bar_symbol"), selection: $wiredBuddyImage) {
                 ForEach(buddies) { buddy in
                     if isConnectionActive {
-                        Image(systemName: buddy.imageActive)
+                        Image(systemName: buddy.imageActive).tag(buddy.id)
                     } else {
-                        Image(systemName: buddy.imageInactive)
+                        Image(systemName: buddy.imageInactive).tag(buddy.id)
                     }
                 }
             }
@@ -49,20 +48,8 @@ struct GeneralView: View {
             Text(LocalizedStringKey("descr_colorize_status")).font(.footnote).foregroundColor(.secondary).lineLimit(nil).fixedSize(horizontal: false, vertical: true)
             Spacer()
         }.padding()
-        .onChange(of: wiredBuddyImage) { newBuddy in
-            UserDefaults.standard.set(newBuddy, forKey: "Buddy")
-        }
         .onChange(of: hideDockIcon) { opt in
-            UserDefaults.standard.set(opt, forKey: "HideDockIcon")
-        }
-        .onChange(of: onlyShowIcon) { opt in
-            UserDefaults.standard.set(opt, forKey: "IconMode")
-        }
-        .onChange(of: hideIPinMenu) { opt in
-            UserDefaults.standard.set(opt, forKey: "HideIPinMenu")
-        }
-        .onChange(of: colorStatus) { opt in
-            UserDefaults.standard.set(opt, forKey: "ColorizeStatus")
+            DockIconVisibility.apply(hidden: opt)
         }
     }
 }

@@ -3,19 +3,19 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding public var isConnectionActive: Bool
-    @Binding public var wiredBuddyImage: Int
+    let isConnectionActive: Bool
+    @Binding var wiredBuddyImage: Int
 
-    @Binding public var hideDockIcon: Bool
-    @Binding public var onlyShowIcon: Bool
-    @Binding public var hideIPinMenu: Bool
-    @Binding public var colorStatus: Bool
+    @Binding var hideDockIcon: Bool
+    @Binding var onlyShowIcon: Bool
+    @Binding var hideIPinMenu: Bool
+    @Binding var colorStatus: Bool
 
-    @Binding public var tabSelection: Int
+    @Binding var tabSelection: Int
     
     var body: some View {
         TabView(selection: $tabSelection) {
-            GeneralView(isConnectionActive: $isConnectionActive,
+            GeneralView(isConnectionActive: isConnectionActive,
                         wiredBuddyImage: $wiredBuddyImage,
                         hideDockIcon: $hideDockIcon,
                         onlyShowIcon: $onlyShowIcon,
@@ -24,7 +24,7 @@ struct SettingsView: View {
                 .tabItem {
                     Label(LocalizedStringKey("general"), systemImage: "gearshape")
                 }.tag(0)
-            TipsView(isConnectionActive: $isConnectionActive)
+            TipsView()
                 .tabItem {
                     Label(LocalizedStringKey("tips"), systemImage: "lightbulb.max")
                 }.tag(1)
@@ -33,12 +33,8 @@ struct SettingsView: View {
                     Label(LocalizedStringKey("about_header"), systemImage: "info.circle")
                 }.tag(2)
         }.frame(width: 450, height: 300)
-        .onAppear() {
-            for window in NSApplication.shared.windows {
-                if window.identifier?.rawValue == "com_apple_SwiftUI_Settings_window" {
-                    window.level = .floating
-                }
-            }
+        .onAppear {
+            NSApplication.shared.activate(ignoringOtherApps: true)
         }
     }
 }

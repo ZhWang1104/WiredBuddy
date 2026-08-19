@@ -1,87 +1,148 @@
 // Copyright (c) 2024-2026 Jan Strumpen <jan@strumpen.dev>. Licensed under the MIT License.
 
-import SwiftUI
 import MacControlCenterUI
 import SettingsAccess
+import SwiftUI
 
 struct ContentView: View {
-    @Binding public var isMenuPresented: Bool
-    @Binding public var isWiredConnection: Bool
-    @Binding public var isPreferred: Bool
-    @Binding public var interfaceName: String?
-    
-    @State public var isInfoSectionExpanded: Bool = true
-    @Binding public var currentIpAddr: String
+    @Binding var isMenuPresented: Bool
+    let networkState: WiredNetworkState
 
-    @Binding public var onlyShowIcon: Bool 
-    @Binding public var hideIPinMenu: Bool
-    @Binding public var colorStatus: Bool
+    @State private var isInfoSectionExpanded = true
+    @Binding var onlyShowIcon: Bool
+    @Binding var hideIPinMenu: Bool
+    @Binding var colorStatus: Bool
+    @Binding var tabSelection: Int
 
-    @Binding public var tabSelection: Int
+    @Environment(\.openURL) private var openURL
+    @Environment(\.openSettings) private var openSettings
 
-    @Environment(\.openURL) var openURL
-    @Environment(\.openSettings) var openSettings
-    
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
-            if !onlyShowIcon {
+            if onlyShowIcon {
+                if !hideIPinMenu {
+                    addressRows
+                    Divider()
+                }
+            } else {
                 MenuHeader(LocalizedStringKey("ethernet")) {
-                    if interfaceName != nil {
-                        Text(interfaceName!).font(.footnote).foregroundColor(.secondary)
+                    if let interfaceName = networkState.interfaceName {
+                        Text(interfaceName)
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
                     }
                 }
 
-                MenuToggle(isOn: .constant(isWiredConnection), image: isWiredConnection ? Image(systemName: "network") : Image(systemName: "network.slash")) {
-                    if isPreferred {
-                        Text(LocalizedStringKey("eth_is_connected")).foregroundColor(colorStatus ? .green : nil)
-                    } else {
-                        Text(LocalizedStringKey("eth_not_connected")).foregroundColor(colorStatus ? .red : nil)
-                    }
+                MenuToggle(
+                    isOn: .constant(networkState.isAvailable),
+                    image: networkState.isAvailable
+                        ? Image(systemName: "network")
+                        : Image(systemName: "network.slash")
+                ) {
+                    Text(
+                        networkState.isAvailable
+                            ? LocalizedStringKey("eth_is_connected")
+                            : LocalizedStringKey("eth_not_connected")
+                    )
+                    .foregroundColor(statusColor)
                 }
-                
-                MenuDisclosureSection(LocalizedStringKey("informations"), isExpanded: $isInfoSectionExpanded) {
+
+                MenuDisclosureSection(
+                    LocalizedStringKey("information"),
+                    isExpanded: $isInfoSectionExpanded
+                ) {
                     if !hideIPinMenu {
-                        MenuToggle(isOn: .constant(isWiredConnection), image: Image(systemName: "externaldrive.connected.to.line.below")) {
-                            Text("IPv4: \(currentIpAddr)")
+                        addressRows
+                    }
+
+                    if networkState.isAvailable {
+                        MenuToggle(
+                            isOn: .constant(networkState.isPreferred),
+                            image: networkState.isPreferred
+                                ? Image(systemName: "trophy")
+                                : Image(systemName: "exclamationmark.triangle")
+                        ) {
+                            Text(
+                                networkState.isPreferred
+                                    ? LocalizedStringKey("eth_preferred")
+                                    : LocalizedStringKey("eth_not_preferred")
+                            )
                         } onClick: { _ in
                             tabSelection = 1
                             openSettingsView()
                         }
                     }
-                    MenuToggle(isOn: .constant(isWiredConnection), image: isPreferred ? Image(systemName: "trophy") : Image(systemName: "exclamationmark.triangle")) {
-                        Text(isPreferred ? LocalizedStringKey("eth_preferred") : LocalizedStringKey("eth_not_preferred"))
-                    } onClick: { _ in
-                        tabSelection = 1
-                        openSettingsView()
-                    }
                 }
 
                 Divider()
             }
+
             MenuCommand(LocalizedStringKey("network_prefs")) {
-                // com.apple.preference.network
-                openURL(URL(string: "x-apple.systempreferences:com.apple.Network-Settings.extension")!)
+                guard let settingsURL = URL(
+                    string: "x-apple.systempreferences:com.apple.Network-Settings.extension"
+                ) else {
+                    return
+                }
+                openURL(settingsURL)
             }
+
             Divider()
-            // Preferences
+
             MenuCommand(LocalizedStringKey("preferences")) {
                 tabSelection = 0
                 openSettingsView()
             }
-            // About
+
             MenuCommand(LocalizedStringKey("about")) {
                 tabSelection = 2
                 openSettingsView()
             }
+
             Divider()
-            // Quit
+
             MenuCommand(LocalizedStringKey("quit")) {
                 NSApplication.shared.terminate(nil)
             }
         }
     }
 
+    private var statusColor: Color? {
+        guard colorStatus else {
+            return nil
+        }
+        return networkState.isAvailable ? .green : .red
+    }
+
+    @ViewBuilder
+    private var addressRows: some View {
+        MenuToggle(
+            isOn: .constant(networkState.isAvailable),
+            image: Image(systemName: "externaldrive.connected.to.line.below")
+        ) {
+            Text("IPv4: \(ipv4DisplayValue)")
+        } onClick: { _ in
+            tabSelection = 1
+            openSettingsView()
+        }
+
+        if let ipv6 = networkState.addresses.ipv6 {
+            MenuToggle(
+                isOn: .constant(networkState.isAvailable),
+                image: Image(systemName: "network")
+            ) {
+                Text("IPv6: \(ipv6)")
+            } onClick: { _ in
+                tabSelection = 1
+                openSettingsView()
+            }
+        }
+    }
+
     private func openSettingsView() {
         try? openSettings()
+    }
+
+    private var ipv4DisplayValue: String {
+        networkState.addresses.ipv4 ?? String(localized: "not_available")
     }
 }

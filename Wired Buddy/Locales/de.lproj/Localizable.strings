@@ -7,7 +7,7 @@
 "no_network_general" = "Netzwerk ist offline";
 "not_available" = "nicht verfügbar";
 "quit" = "Beenden";
-"informations" = "Informationen";
+"information" = "Informationen";
 "preferences" = "Einstellungen";
 "network_prefs" = "Netzwerkeinstellungen...";
 "about" = "Über...";
@@ -29,7 +29,7 @@
 "colors" = "Farben";
 "launch_on_start" = "Beim Anmelden öffnen";
 "hide_dock_icon" = "Icon im Dock verstecken";
-"only_icon" = "Zeige nur das Symbol in der Menüleiste";
+"only_icon" = "Kompaktes Menü verwenden";
 "hide_ip" = "IP im Menü verstecken";
 "colorize_status" = "Status im Menü farbig hinterlegen";
 
@@ -41,11 +41,11 @@
 "about_viewsource" = "[👀 Quellcode](https://github.com/yeahitsjan/WiredBuddy)";
 
 // Descriptions
-"descr_ip_header" = "IPv4";
-"descr_ip" = "Die IPv4-Adresse des aktuell genutzten Ethernet-Interfaces wird im Menü angezeigt. Der Name des Interfaces ist oben rechts grau hinterlegt. Wenn gewünscht, kann man die IP-Adresse auch in den Einstellungen ausblenden.";
+"descr_ip_header" = "IP-Adressen";
+"descr_ip" = "Zeigt die bevorzugte IPv4- und IPv6-Adresse der erkannten Ethernet-Schnittstelle. Link-Lokal-Adressen werden nur verwendet, wenn keine andere Adresse verfügbar ist.";
 "descr_preferred_header" = "Bevorzugte Verbindung";
-"descr_preferred" = "Zeigt an, ob die aktuelle Ethernet-Schnittstelle die bevorzugte Schnittstelle des Systems ist. Abhängig von den Verbindungen ist dies nicht immer der Fall. macOS ermöglicht es mehrere offene Schnittstellen zu haben und behandelt diese je nach Reihenfolge bevorzugt.";
-"descr_standard_mode" = "Das Menü wird wie eine native Integration in macOS dargestellt. Beim Klick auf das Symbol werden zusätzliche Informationen angezeigt.";
+"descr_preferred" = "Zeigt an, ob der aktuelle Standard-Netzwerkpfad Ethernet verwendet. Ethernet kann verbunden bleiben, ohne bevorzugt zu sein, wenn eine andere Schnittstelle verwendet wird.";
+"descr_standard_mode" = "Zeigt Verbindungsstatus, IP-Adressen und ob der aktuelle Standardpfad Ethernet verwendet.";
 "descr_hide_dock_icon" = "Versteckt das Icon im Dock während die Anwendung im Hintergrund weiterläuft.";
-"descr_only_icon" = "Die Anzeige der IP-Adresse und der Bevorzugungsstatus wird ausgeblendet. Die Applikation wird als reines Symbol in der Menüleiste betrieben.";
-"descr_colorize_status" = "Hinterlegt den Menüeintrag grün wenn eine Netzwerkverbindung vorhanden ist und rot, wenn keine vorhanden ist.";
+"descr_only_icon" = "Blendet den detaillierten Statusbereich aus. IP-Adressen bleiben sichtbar, sofern IP im Menü verstecken nicht aktiviert ist.";
+"descr_colorize_status" = "Zeigt den Verbindungsstatus grün an, wenn Ethernet verfügbar ist, und rot, wenn es nicht verfügbar ist.";

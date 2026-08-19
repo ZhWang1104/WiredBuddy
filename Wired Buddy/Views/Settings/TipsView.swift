@@ -3,7 +3,6 @@
 import SwiftUI
 
 struct TipsView: View {
-    @Binding public var isConnectionActive: Bool
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {

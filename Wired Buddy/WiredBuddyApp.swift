@@ -1,46 +1,73 @@
 // Copyright (c) 2024-2026 Jan Strumpen <jan@strumpen.dev>. Licensed under the MIT License.
 
-import SwiftUI
 import MenuBarExtraAccess
 import SettingsAccess
+import SwiftUI
+
+enum DockIconVisibility {
+    static func apply(hidden: Bool) {
+        NSApplication.shared.setActivationPolicy(hidden ? .accessory : .regular)
+    }
+}
+
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        let defaults = UserDefaults.standard
+        let hideDockIcon = defaults.object(forKey: "HideDockIcon") as? Bool ?? true
+        DockIconVisibility.apply(hidden: hideDockIcon)
+    }
+}
 
 @main
 struct WiredBuddyApp: App {
-    @State public var isMenuPresented: Bool = false
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @StateObject private var networkMonitor = WBNetworkMonitor()
 
-    @StateObject var netMon = WBNetworkMonitor()
-    @State public var wiredBuddyImage = UserDefaults.standard.integer(forKey: "Buddy")
+    @State private var isMenuPresented = false
+    @State private var tabSelection = 0
 
-    @State public var hideDockIcon = UserDefaults.standard.bool(forKey: "HideDockIcon")
-    @State public var onlyShowIcon = UserDefaults.standard.bool(forKey: "IconMode")
-    @State public var hideIPinMenu = UserDefaults.standard.bool(forKey: "HideIPinMenu")
-    @State public var colorStatus = UserDefaults.standard.bool(forKey: "ColorizeStatus")
+    @AppStorage("Buddy") private var wiredBuddyImage = 0
+    @AppStorage("HideDockIcon") private var hideDockIcon = true
+    @AppStorage("IconMode") private var onlyShowIcon = false
+    @AppStorage("HideIPinMenu") private var hideIPinMenu = false
+    @AppStorage("ColorizeStatus") private var colorStatus = false
 
-    // Selection index between tabs inside the SettingsView
-    @State public var tabSelection = 0
-    
+    private var selectedBuddy: Buddy {
+        buddies.first(where: { $0.id == wiredBuddyImage })
+            ?? Buddy(id: 0, imageActive: "network", imageInactive: "network.slash")
+    }
+
     var body: some Scene {
-        WindowGroup {
-            WelcomeView().frame(width: 285, height: 300)
-        }.commandsRemoved().windowStyle(.hiddenTitleBar).windowResizability(.contentSize)
+        MenuBarExtra(
+            "Wired Buddy",
+            systemImage: networkMonitor.state.isAvailable
+                ? selectedBuddy.imageActive
+                : selectedBuddy.imageInactive
+        ) {
+            ContentView(
+                isMenuPresented: $isMenuPresented,
+                networkState: networkMonitor.state,
+                onlyShowIcon: $onlyShowIcon,
+                hideIPinMenu: $hideIPinMenu,
+                colorStatus: $colorStatus,
+                tabSelection: $tabSelection
+            )
+            .openSettingsAccess()
+        }
+        .menuBarExtraStyle(.window)
+        .menuBarExtraAccess(isPresented: $isMenuPresented)
+
         Settings {
-            SettingsView(isConnectionActive: $netMon.isWiredConnection,
-                            wiredBuddyImage: $wiredBuddyImage,
-                            hideDockIcon: $hideDockIcon,
-                            onlyShowIcon: $onlyShowIcon,
-                            hideIPinMenu: $hideIPinMenu,
-                            colorStatus: $colorStatus,
-                            tabSelection: $tabSelection)
-        }.commandsRemoved()
-        let _ = NSApplication.shared.setActivationPolicy(hideDockIcon ? .accessory : .regular)
-        MenuBarExtra("Wired Buddy", systemImage: netMon.isWiredConnection ? buddies[wiredBuddyImage].imageActive : buddies[wiredBuddyImage].imageInactive) {
-            ContentView(isMenuPresented: $isMenuPresented, isWiredConnection: $netMon.isWiredConnection, isPreferred: $netMon.isPreferred, interfaceName: $netMon.interfaceName,
-                        currentIpAddr: $netMon.ipAddr,
-                        onlyShowIcon: $onlyShowIcon,
-                        hideIPinMenu: $hideIPinMenu,
-                        colorStatus: $colorStatus,
-                        tabSelection: $tabSelection)
-                .openSettingsAccess()
-        }.menuBarExtraStyle(.window).menuBarExtraAccess(isPresented: $isMenuPresented)
+            SettingsView(
+                isConnectionActive: networkMonitor.state.isAvailable,
+                wiredBuddyImage: $wiredBuddyImage,
+                hideDockIcon: $hideDockIcon,
+                onlyShowIcon: $onlyShowIcon,
+                hideIPinMenu: $hideIPinMenu,
+                colorStatus: $colorStatus,
+                tabSelection: $tabSelection
+            )
+        }
+        .commandsRemoved()
     }
 }

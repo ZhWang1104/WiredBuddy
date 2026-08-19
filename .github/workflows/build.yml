@@ -1,0 +1,32 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify network state logic
+        run: Scripts/verify-network.sh
+
+      - name: Run Swift package tests
+        run: swift test
+
+      - name: Build the macOS app without code signing
+        run: >-
+          xcodebuild
+          -project "Wired Buddy.xcodeproj"
+          -scheme "Wired Buddy"
+          -configuration Debug
+          -destination "platform=macOS"
+          CODE_SIGNING_ALLOWED=NO
+          build
