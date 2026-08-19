@@ -25,6 +25,7 @@ Wired Buddy 常驻 macOS 菜单栏，用来显示以太网接口、连接状态�
 - 分别报告“已连接”和“首选连接”，避免混淆物理连接与默认路由。
 - 在 Wi-Fi、VPN 或其他接口优先时继续报告以太网状态。
 - 支持多种菜单栏图标、状态颜色和紧凑菜单。
+- 提供简体中文、英语和德语界面，并支持 macOS 的单独应用语言设置。
 - 支持登录时启动，可直接打开 macOS 网络设置。
 - 仅观察本机网络配置，不发送网络请求、不收集分析数据。
 - 依赖固定到精确版本或 Git 提交，降低未来构建漂移风险。
@@ -39,7 +40,7 @@ Wired Buddy 常驻 macOS 菜单栏，用来显示以太网接口、连接状态�
 
 ### 直接下载（Apple Silicon）
 
-[下载 Wired Buddy 0.2 Hardened](https://github.com/ZhWang1104/WiredBuddy/releases/tag/v0.2.0-hardened.1)，解压后将应用移入 `/Applications`。该附件适用于 M1、M2、M3、M4 或后续 arm64 Mac，使用临时签名且未经过 Apple 公证；具体限制和校验值见 Release 页面。
+[下载 Wired Buddy 0.2.1 中文版](https://github.com/ZhWang1104/WiredBuddy/releases/tag/v0.2.1-hardened.1)，解压后将应用移入 `/Applications`。该附件适用于 M1、M2、M3、M4 或后续 arm64 Mac，使用临时签名且未经过 Apple 公证；具体限制和校验值见 Release 页面。
 
 ### 使用 Xcode
 
@@ -63,6 +64,10 @@ Scripts/build-local-app.sh "$PWD/Wired Buddy-local.app"
 
 建议先将应用移动到 `/Applications`，确认安装路径固定后再启用“登录时启动”。
 
+## 中文界面
+
+当 macOS 首选语言为简体中文时，应用会自动显示中文。也可以只修改 Wired Buddy：打开“系统设置 → 通用 → 语言与地区 → 应用程序”，添加 Wired Buddy 并选择“简体中文”，然后重新启动应用。
+
 ## 状态含义
 
 | 显示状态 | 含义 |
@@ -76,11 +81,13 @@ Scripts/build-local-app.sh "$PWD/Wired Buddy-local.app"
 ## 验证
 
 ```sh
+Scripts/verify-localizations.sh
 Scripts/verify-network.sh
 swift build --target WiredBuddyBuildCheck
 swift test
 ```
 
+- `verify-localizations.sh` 验证英语、德语和简体中文资源格式正确、翻译键完全一致。
 - `verify-network.sh` 检查状态解析以及真实 IPv4/IPv6 地址枚举。
 - `WiredBuddyBuildCheck` 编译全部应用 Swift 源码与固定依赖。
 - `swift test` 运行标准 XCTest，需要完整 Xcode 环境。

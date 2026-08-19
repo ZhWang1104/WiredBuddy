@@ -1,0 +1,51 @@
+// 菜单栏
+"ethernet" = "以太网";
+"eth_is_connected" = "已连接";
+"eth_not_connected" = "未连接";
+"eth_preferred" = "首选连接";
+"eth_not_preferred" = "不是首选连接";
+"no_network_general" = "网络离线";
+"not_available" = "不可用";
+"quit" = "退出";
+"information" = "信息";
+"preferences" = "设置";
+"network_prefs" = "网络服务设置…";
+"about" = "关于…";
+"next" = "下一步";
+
+// 欢迎窗口
+"welcome_header" = "感谢使用 Wired Buddy！";
+"welcome_description" = "可以关闭此窗口，Wired Buddy 会继续在后台运行。";
+
+// 设置
+"general" = "通用";
+"appearance" = "外观";
+"tips" = "使用提示";
+
+// 通用设置
+"startup" = "启动";
+"behavior" = "应用行为";
+"menu_bar_symbol" = "菜单栏图标";
+"colors" = "颜色";
+"launch_on_start" = "登录时启动";
+"hide_dock_icon" = "隐藏程序坞图标";
+"only_icon" = "使用紧凑菜单";
+"hide_ip" = "在菜单中隐藏 IP 地址";
+"colorize_status" = "为菜单状态着色";
+
+// 关于
+"about_header" = "关于";
+"copyright_note" = "版权所有 © 2024–2026 Jan Strumpen。采用 MIT 许可证。";
+"about_sponsor" = "[❤️ 捐赠](https://paypal.me/kkaj59)";
+"about_oss" = "[🚀 开源许可证](https://github.com/ZhWang1104/WiredBuddy/blob/develop/LICENSE)";
+"about_viewsource" = "[👀 查看源码](https://github.com/ZhWang1104/WiredBuddy)";
+
+// 使用说明
+"descr_ip_header" = "IP 地址";
+"descr_ip" = "显示检测到的以太网接口的首选 IPv4 和 IPv6 地址。只有在没有其他地址时才使用链路本地地址。";
+"descr_preferred_header" = "首选接口";
+"descr_preferred" = "显示当前默认网络路径是否使用以太网。当系统使用其他接口时，以太网可能仍处于已连接状态，但不是首选连接。";
+"descr_standard_mode" = "显示连接状态、IP 地址以及当前默认路径是否使用以太网。";
+"descr_hide_dock_icon" = "应用运行时隐藏程序坞图标。";
+"descr_only_icon" = "隐藏详细状态区域。除非启用“在菜单中隐藏 IP 地址”，否则仍会显示 IP 地址。";
+"descr_colorize_status" = "以太网可用时用绿色显示连接状态，不可用时用红色显示。";

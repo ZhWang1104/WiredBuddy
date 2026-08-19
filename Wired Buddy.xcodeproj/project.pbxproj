@@ -30,6 +30,7 @@
 		3D4624BA2BC0B5080047F0F4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3D4624BE2BC0B8610047F0F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D4624C02BC0B8710047F0F4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A10000000000000000000004 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		3D4624C22BC0BA970047F0F4 /* Buddy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buddy.swift; sourceTree = "<group>"; };
 		3DAC901C2BC00B4A0078AD69 /* Wired Buddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wired Buddy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DAC901F2BC00B4A0078AD69 /* WiredBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiredBuddyApp.swift; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 				en,
 				Base,
 				de,
+				"zh-Hans",
 			);
 			mainGroup = 3DAC90132BC00B4A0078AD69;
 			packageReferences = (
@@ -242,6 +244,7 @@
 			children = (
 				3D4624BE2BC0B8610047F0F4 /* en */,
 				3D4624C02BC0B8710047F0F4 /* de */,
+				A10000000000000000000004 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -379,7 +382,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Wired Buddy/Preview Content\"";
 				DEVELOPMENT_TEAM = H9RD6TN822;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -393,7 +396,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = de.jkowalewicz.WiredBuddy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -411,7 +414,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Wired Buddy/Preview Content\"";
 				DEVELOPMENT_TEAM = H9RD6TN822;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -425,7 +428,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = de.jkowalewicz.WiredBuddy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

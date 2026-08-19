@@ -20,6 +20,7 @@ When more than one Ethernet interface is available, `NWPath.availableInterfaces`
 Run:
 
 ```sh
+Scripts/verify-localizations.sh
 Scripts/verify-network.sh
 swift build --target WiredBuddyBuildCheck
 swift test
@@ -43,6 +44,7 @@ Test these physical configurations before a release:
 5. A VPN over Ethernet.
 6. DHCP renewal and an IPv6-enabled network.
 7. Launch at login after moving the app to `/Applications`.
+8. English, German, and Simplified Chinese through macOS per-app language selection.
 
 ## Dependency updates
 

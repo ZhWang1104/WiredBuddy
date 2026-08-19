@@ -15,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Verify localizations
+        run: Scripts/verify-localizations.sh
+
       - name: Verify network state logic
         run: Scripts/verify-network.sh
 

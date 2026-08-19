@@ -20,18 +20,18 @@ contents_dir="$app_dir/Contents"
 resources_dir="$contents_dir/Resources"
 iconset_dir="$staging_dir/AppIcon.iconset"
 
-mkdir -p "$contents_dir/MacOS" "$resources_dir/en.lproj" "$resources_dir/de.lproj" "$iconset_dir"
+mkdir -p "$contents_dir/MacOS" "$iconset_dir"
 
 install -m 755 \
   "$repository_dir/.build/release/WiredBuddyBuildCheck" \
   "$contents_dir/MacOS/Wired Buddy"
 install -m 644 "$repository_dir/Packaging/Info.plist" "$contents_dir/Info.plist"
-install -m 644 \
-  "$repository_dir/Wired Buddy/Locales/en.lproj/Localizable.strings" \
-  "$resources_dir/en.lproj/Localizable.strings"
-install -m 644 \
-  "$repository_dir/Wired Buddy/Locales/de.lproj/Localizable.strings" \
-  "$resources_dir/de.lproj/Localizable.strings"
+for localization in en de zh-Hans; do
+  mkdir -p "$resources_dir/$localization.lproj"
+  install -m 644 \
+    "$repository_dir/Wired Buddy/Locales/$localization.lproj/Localizable.strings" \
+    "$resources_dir/$localization.lproj/Localizable.strings"
+done
 install -m 644 \
   "$repository_dir/Resources/1024x1024px_hintergrund-128.png" \
   "$resources_dir/appicon128.png"
