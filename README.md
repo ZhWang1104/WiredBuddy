@@ -37,6 +37,10 @@ Wired Buddy 常驻 macOS 菜单栏，用来显示以太网接口、连接状态�
 
 ## 安装与构建
 
+### 直接下载（Apple Silicon）
+
+[下载 Wired Buddy 0.2 Hardened](https://github.com/ZhWang1104/WiredBuddy/releases/tag/v0.2.0-hardened.1)，解压后将应用移入 `/Applications`。该附件适用于 M1、M2、M3、M4 或后续 arm64 Mac，使用临时签名且未经过 Apple 公证；具体限制和校验值见 Release 页面。
+
 ### 使用 Xcode
 
 ```sh
